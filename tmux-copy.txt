@@ -1,0 +1,109 @@
+# Initial setup
+set -g default-terminal xterm-256color
+set -g status-keys vi
+
+
+# use C-\, since it's just above Ctrl on my keyboaerd set-option -g prefix 'C-\'
+unbind 'C-\'
+bind 'C-\' send-prefix
+
+
+# Easy config reload
+bind r source-file ~/.tmux.conf \; display-message "tmux.conf reloaded."
+
+
+# Lengthen the amount of time status messages are displayed set-option -g display-time 2000 set-option -g display-panes-time 3000
+
+
+# Set the base-index to 1 rather than 0
+set -g base-index 1
+set-window-option -g pane-base-index 1
+
+
+# Automatically set window title
+set-window-option -g automatic-rename on set-option -g set-titles on
+
+
+# Key bindings for copy-paste
+setw -g mode-keys vi
+unbind p
+bind p paste-buffer
+###@bind -t vi-copy 'v' begin-selection
+###@bind -t vi-copy 'y' copy-selection
+bind -T copy-mode-vi 'v' send-keys -X begin-selection bind -T copy-mode-vi 'y' send-keys -X copy-selection ###set-option -g renumber-windows on
+
+
+# Window activity monitor
+setw -g monitor-activity off
+set -g visual-activity off
+
+
+# Set easier window split keys
+bind v split-window -v
+bind h split-window -h
+
+
+# Use Alt-arrow keys without prefix key to switch panes bind -n M-Left select-pane -L bind -n M-Right select-pane -R bind -n M-Up select-pane -U bind -n M-Down select-pane -D
+
+
+# Use Shift-Alt-arrow keys without prefix key to resize panes bind -n S-M-Left resize-pane -L 10 bind -n S-M-Right resize-pane -R 10 bind -n S-M-Up resize-pane -U 1 bind -n S-M-Down resize-pane -D 1
+
+
+# Allow the arrow key to be used immediately after changing windows.
+set-option -g repeat-time 0
+
+
+# Use Control-arrow without prefix key to switch windows and sessions bind -n C-Left  previous-window bind -n C-Right next-window
+bind -n C-Up    choose-session \; send-keys Up Enter
+bind -n C-Down  choose-session \; send-keys Down Enter
+
+
+# For when the left & right arrow keys are not working bind -n 'C-,'  previous-window bind -n 'C-.' next-window
+
+
+# Use Control-Insert without prefix key to start a new session bind -n C-IC new-session
+
+
+# Double press <prefix> to move to last window bind 'C-\' last-window
+
+# No delay for escape key press
+set -sg escape-time 0
+
+
+# Window activity monitor
+setw -g monitor-activity off
+set -g visual-activity off
+
+
+# Mouse Mode
+###set -g mode-mouse on
+###set -g mouse-resize-pane on
+###set -g mouse-select-pane on
+###set -g mouse-select-window on
+set -g history-limit 10000
+
+# Theme
+set -g window-status-current-bg green
+set -g window-status-current-fg white
+set -g window-status-current-attr bold
+set-option -g message-bg colour237
+set-option -g message-fg colour231
+set-option -g pane-border-fg green
+set-option -g pane-active-border-fg white
+
+# Status Bar
+set -g status-utf8 on
+set -g status-fg colour8
+set -g status-bg colour234
+
+# current session
+set -g status-left ' #S '
+set -g status-left-length 15
+set -g status-left-fg colour229
+set -g status-left-bg colour166
+
+set -g status-right "%a %d-%b-%Y %H:%M"
+
+# window list
+set -g window-status-format         "#[fg=colour8] #I #[fg=colour231]#W#[fg=colour166]#F "
+set -g window-status-current-format "#[fg=colour117,bg=colour31] #I #[fg=colour231]#W#[fg=colour166]#F "
