@@ -1,0 +1,237 @@
+export PAGER=less
+
+# Proxy disabled (override any inherited value)
+export http_proxy=
+export https_proxy=
+
+export LC_COLLATE=en_GB.utf8
+
+alias ps='ps auxf'
+
+alias ag="LD_LIBRARY_PATH=~/LIBS ag"
+alias rg="rg --colors='match:fg:black' --colors='match:bg:yellow' --colors='line:fg:cyan' --colors='path:fg:green'"
+alias lll='less $(ls -1tr | tail -1)'
+alias lll2='less $(ls -1tr | tail -2)'
+alias lll3='less $(ls -1tr | tail -3)'
+alias lll4='less $(ls -1tr | tail -4)'
+alias lll5='less $(ls -1tr | tail -5)'
+
+alias h="head -n"
+
+alias llt='ls -lt --color=auto'
+alias lltr='ls -ltr --color=auto'
+
+alias lg=lazygit
+
+alias glances="uvx glances"
+alias marimo="uvx marimo"
+alias "nicegui-pack"="uvx --from nicegui nicegui-pack"
+alias "mssql-scripter"="uvx mssql-scripter"
+alias ruff="uvx ruff"
+alias streamlit="uvx streamlit"
+alias pandoc-html="pandoc --to=html --standalone --self-contained"
+alias ts="awk '{ print strftime(\"[%Y-%m-%d %H:%M:%S]\"), \$0; fflush(); }'"
+
+shopt -s checkwinsize
+shopt -s globstar
+
+umask 0002
+
+export TERM=xterm-256color
+
+export FGCOLOR_BLACK=30
+export FGCOLOR_BLUE=34
+export FGCOLOR_CYAN=36
+export FGCOLOR_GREEN=32
+export FGCOLOR_MAGENTA=35
+export FGCOLOR_RED=31
+export FGCOLOR_WHITE=37
+export FGCOLOR_YELLOW=33
+
+export S_COLORS=auto
+export EDITOR='emacs -nw'
+
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
+alias .....="cd ../../../.."
+
+alias ..1="cd .."
+alias ..2="cd ../.."
+alias ..3="cd ../../.."
+alias ..4="cd ../../../.."
+alias ..5="cd ../../../../.."
+alias ..6="cd ../../../../../.."
+alias ..7="cd ../../../../../../.."
+alias ..8="cd ../../../../../../../.."
+alias ..9="cd ../../../../../../../../.."
+alias cal="cal -m"
+alias dush="du -csh * | sort -h"
+alias cal='cal -m'
+alias cls=clear
+alias cr='EDITOR=vi codeReview -n -c'
+alias log2='less -ip "jboss.*microkernel.*|warn|error|fatal|exception|incomplete|fomon_[a-z0-9][a-z0-9_]*"'
+###alias ls='ls --color'
+alias xemacs='emacs -nw'
+alias suc='sort | uniq -c'
+alias sucn='sort | uniq -c | sort -n'
+alias sucnr='sort | uniq -c | sort -nr'
+alias split-fix="tr '\\01' \\\\n"
+alias galiases="alias | grep git | grep -v galiases"
+alias br=branch.sh
+alias ga="git add"
+alias gb="git branch"
+alias gba="git branch -a"
+alias gc="git checkout"
+alias gcd="git checkout develop"
+alias gcm="git checkout master"
+alias gd=__git_diff
+alias gl1="git log1"
+alias gl="git log"
+alias gld="git log-gdo"
+alias gppf="git push personal-fork"
+alias gri="git rebase -i HEAD~15"
+alias grv="git remote -v"
+alias gs1="git status1"
+alias gs="git status"
+alias gss="git status --short"
+alias gsa="git status-all"
+alias gt='git tag --format='\''%(creatordate:short)%09%(*objectname:short)%(objectname)%09%(refname:strip=2)'\'' | sort'
+
+alias gwb="my-git-work-branch.sh"
+alias gmb="my-git-merge-branch.sh"
+alias liquibase-aws='liquibase --defaultsFile=liquibase.properties.aws'
+alias liquibase-dev='liquibase --defaultsFile=liquibase.properties.dev'
+alias liquibase-test='liquibase --defaultsFile=liquibase.properties.test'
+
+alias lba=liquibase-aws
+alias lbd=liquibase-dev
+alias lbt=liquibase-test
+
+# Simple calculator
+function ? () { echo "$*" | bc; }
+
+function __git_diff()
+{
+    if [ $# -eq 0 ]; then
+        git diff --color | less -Rp '^diff.*'
+    else
+        git diff $*
+    fi
+}
+
+function job-rc()
+{
+    NAME=$1
+    LIMIT=${2:-10}
+    ls -1tr | grep ${NAME} | tail -${LIMIT} | xargs xzgrep Return.Code
+}
+
+function job-dur()
+{
+    NAME=$1
+    LIMIT=${2:-10}
+    ls -1tr | grep ${NAME} | tail -${LIMIT} | xargs xzgrep Duration
+}
+
+function job-rc-dur()
+{
+    NAME=$1
+    LIMIT=${2:-10}
+    job-rc ${NAME} ${LIMIT}
+    echo -----
+    job-dur ${NAME} ${LIMIT}
+}
+# Maven commands
+
+alias mcc="mvn clean compile"
+alias mct="mvn clean test"
+alias mci="mvn clean install"
+alias mcpa="mvn clean package appassembler:assemble -Dmaven.deploy.skip=true"
+alias mcd="mvn clean deploy -Dmaven.deploy.skip=true"
+
+alias mci-notests="mvn -DskipTests clean install"
+alias mcpa-notests="mvn -DskipTests clean package appassembler:assemble -Dmaven.deploy.skip=true"
+alias mcd-notests="mvn -DskipTests clean deploy -Dmaven.deploy.skip=true"
+
+alias mcco="mvn clean compile --offline"
+alias mcto="mvn clean test --offline"
+alias mcio="mvn clean install --offline"
+alias mcpao="mvn clean package appassembler:assemble --offline -Dmaven.deploy.skip=true"
+alias mcdo="mvn clean deploy --offline -Dmaven.deploy.skip=true"
+
+alias mcio-notests="mvn -DskipTests clean install --offline"
+alias mcpao-notests="mvn -DskipTests clean package appassembler:assemble --offline -Dmaven.deploy.skip=true"
+alias mcdo-notests="mvn -DskipTests clean deploy --offline -Dmaven.deploy.skip=true"
+
+alias mc="mvn compile"
+alias mt="mvn test"
+alias mi="mvn install"
+alias mpa="mvn package appassembler:assemble -Dmaven.deploy.skip=true"
+alias md="mvn deploy -Dmaven.deploy.skip=true"
+
+alias mi-notests="mvn -DskipTests install"
+alias mpa-notests="mvn -DskipTests package appassembler:assemble -Dmaven.deploy.skip=true"
+alias md-notests="mvn -DskipTests deploy -Dmaven.deploy.skip=true"
+
+alias mco="mvn compile --offline"
+alias mto="mvn test --offline"
+alias mio="mvn install --offline"
+alias mpao="mvn package appassembler:assemble --offline -Dmaven.deploy.skip=true"
+alias mdo="mvn deploy --offline -Dmaven.deploy.skip=true"
+
+alias mio-notests="mvn -DskipTests install --offline"
+alias mdo-notests="mvn -DskipTests deploy --offline -Dmaven.deploy.skip=true"
+
+alias maliases="alias | grep mvn | egrep -v 'offline|notests' | sort; echo; echo + add \\'o\\' for offline mode; echo + add \\'-notests\\' to skip tests"
+
+function psgrep()
+{
+    ps auxxx | grep $1 | grep -v "grep $1"
+}
+
+function repeat() {
+    n=$1
+    shift
+    for ((i=${n};i--;)); do
+        "$@"
+    done
+}
+
+unset SSH_ASKPASS
+
+#==============================================================================
+# Database stuff
+#==============================================================================
+
+unset LANG
+
+#======================================================================================================================
+# Perso
+#======================================================================================================================
+
+#[ -f ~/toolbox/git/.git-completion.bash ] && . ~/toolbox/git/.git-completion.bash
+[ -f ~/.git-completion.bash ] && . ~/.git-completion.bash
+
+[ -f ~/toolbox/etc/.bashrc.d/common.sh ] && . ~/toolbox/etc/.bashrc.d/common.sh
+
+[ -f ~/toolbox/etc/.bashrc.d/ansi.sh ] && . ~/toolbox/etc/.bashrc.d/ansi.sh
+
+[ -f ~/toolbox/etc/.bashrc.d/prompt.sh ] && . ~/toolbox/etc/.bashrc.d/prompt.sh
+
+# Export all the tbx_* and __tbx_* functions
+for x in $(declare -fp | egrep "^tbx_|^__tbx_" | cut -d' ' -f1); do
+    export -f ${x}
+done
+###
+### TEMP - until default for all
+###
+
+# ulimit -u 100000 # ERROR
+
+alias awsa="aws --output table"
+alias awsj="aws --output json"
+alias awsx="aws --output text"
+alias awsy="aws --output yaml"
+alias awsys="aws --output yaml-stream"
+
